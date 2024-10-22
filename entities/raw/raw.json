@@ -1,0 +1,25 @@
+{
+"blank":[
+ {
+  "title": "ore",
+  "filter": 7,
+  "hack": 5,
+  "firepower": 8
+ },
+ {
+  "title": "liqud",
+  "radar": 4,
+  "hack": 5,
+  "barrier": 6,
+  "stealth": 3,
+  "firepower": 2
+ },
+ {
+  "title": "gas",
+  "filter": 3,
+  "radar": 6,
+  "barrier": 4,
+  "stealth": 7
+ }
+]
+}
