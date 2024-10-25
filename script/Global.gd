@@ -16,26 +16,32 @@ func _ready() -> void:
 	#get_tree().bourse.resource.after_init()
 	
 func init_arr() -> void:
-	arr.aspect_designation = ["energy", "network", "payload", "speed", "barrier", "hack", "stealth", "firepower"]
-	arr.primary = [
-		TokenResource.Aspect.ENERGY,
-		TokenResource.Aspect.NETWORK,
-		TokenResource.Aspect.PAYLOAD,
-		TokenResource.Aspect.SPEED
+	arr.aspect_designation = ["firepower", "radar", "hack", "barrier", "stealth", "filter"]
+	arr.support = [
+		TokenResource.Aspect.RADAR,
+		TokenResource.Aspect.STEALTH
 	]
-	arr.secondary = [
+	arr.defense = [
 		TokenResource.Aspect.BARRIER,
-		TokenResource.Aspect.HACK,
-		TokenResource.Aspect.STEALTH,
-		TokenResource.Aspect.FIREPOWER
+		TokenResource.Aspect.FILTER
+	]
+	arr.offense = [
+		TokenResource.Aspect.FIREPOWER,
+		TokenResource.Aspect.HACK
 	]
 	
-	arr.aspect = []
-	arr.aspect.append_array(arr.primary)
-	arr.aspect.append_array(arr.secondary)
+	arr.aspect = [
+		TokenResource.Aspect.FIREPOWER,
+		TokenResource.Aspect.RADAR,
+		TokenResource.Aspect.HACK,
+		TokenResource.Aspect.BARRIER,
+		TokenResource.Aspect.STEALTH,
+		TokenResource.Aspect.FILTER,
+	]
 	
 func init_dict() -> void:
 	init_direction()
+	init_dice()
 	
 func init_direction() -> void:
 	dict.direction = {}
@@ -60,18 +66,38 @@ func init_direction() -> void:
 		direction = dict.direction.diagonal[_i]
 		dict.direction.hybrid.append(direction)
 	
+func init_dice() -> void:
+	dict.dice = {}
+	dict.dice.aspect = {}
+	dict.dice.aspect[TokenResource.Aspect.FIREPOWER] = [1,2,4,6,8,8]
+	dict.dice.aspect[TokenResource.Aspect.RADAR] = [1,2,3,6,7,8]
+	dict.dice.aspect[TokenResource.Aspect.HACK] = [1,2,5,7,7,7]
+	dict.dice.aspect[TokenResource.Aspect.BARRIER] = [1,2,4,5,6,8]
+	dict.dice.aspect[TokenResource.Aspect.STEALTH] = [2,3,4,5,6,7]
+	dict.dice.aspect[TokenResource.Aspect.FILTER] = [1,3,3,5,7,7]
+	
+	dict.avg = {}
+	dict.avg.aspect = {}
+	
+	for aspect in dict.dice.aspect:
+		dict.avg.aspect[aspect] = 0.0
+		
+		for value in dict.dice.aspect[aspect]:
+			dict.avg.aspect[aspect] += value
+		
+		dict.avg.aspect[aspect] /= dict.dice.aspect[aspect].size()
+	
 func init_color():
 	pass
-	#var h = 360.0
+	var h = 360.0
 	
-	#color.aspect[TokenResource.Aspect.NETWORK] = Color.from_hsv(160 / h, 0.8, 0.5)
-	#color.aspect[TokenResource.Aspect.ENERGY] = Color.from_hsv(60 / h, 0.9, 0.9)
-	#color.aspect[TokenResource.Aspect.SPEED] = Color.from_hsv(35 / h, 0.9, 0.9)
-	#color.aspect[TokenResource.Aspect.PAYLOAD] = Color.from_hsv(0 / h, 0.0, 0.7)
-	#color.aspect[TokenResource.Aspect.HACK] = Color.from_hsv(280 / h, 0.9, 0.9)
-	#color.aspect[TokenResource.Aspect.FIREPOWER] = Color.from_hsv(0 / h, 0.9, 0.9)
-	#color.aspect[TokenResource.Aspect.BARRIER] = Color.from_hsv(210 / h, 0.9, 0.9)
-	#color.aspect[TokenResource.Aspect.STEALTH] = Color.from_hsv(115 / h, 0.9, 0.7)
+	color.aspect = {}
+	color.aspect[TokenResource.Aspect.FIREPOWER] = Color.from_hsv(20 / h, 0.9, 0.9)
+	color.aspect[TokenResource.Aspect.RADAR] = Color.from_hsv(90 / h, 0.9, 0.9)
+	color.aspect[TokenResource.Aspect.HACK] = Color.from_hsv(140 / h, 0.9, 0.9)
+	color.aspect[TokenResource.Aspect.BARRIER] = Color.from_hsv(200 / h, 0.9, 0.9)
+	color.aspect[TokenResource.Aspect.STEALTH] = Color.from_hsv(270 / h, 0.9, 0.9)
+	color.aspect[TokenResource.Aspect.FILTER] = Color.from_hsv(340 / h, 0.9, 0.9)
 	
 func save(path_: String, data_): #: String
 	var file = FileAccess.open(path_, FileAccess.WRITE)
@@ -136,5 +162,5 @@ func set_combinations_based_on_size(combinations_: Dictionary, size_: int) -> vo
 				if !combinations_[size_].has(combination):
 					combinations_[size_].append(combination)
 	
-func get_str_aspect(aspect_: TokenResource.Type) -> String:
-	return TokenResource.Aspect.keys()[aspect_].to_lower().capitalize()
+#func get_str_aspect(aspect_: TokenResource.Type) -> String:
+	#return TokenResource.Aspect.keys()[aspect_].to_lower().capitalize()

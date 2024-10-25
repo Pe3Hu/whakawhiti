@@ -1,1 +1,9 @@
 res://entities/world/world.tscn
+res://entities/dice/dice_resource.gd
+res://entities/dice/face_resource.gd
+res://script/Global.gd
+res://entities/dice/pool_resource.gd
+res://entities/token/token_resource.gd
+res://entities/bourse/bourse_resource.gd
+res://entities/bourse/bourse.gd
+res://entities/bourse/bourse.tscn

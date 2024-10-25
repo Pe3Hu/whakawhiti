@@ -1,4 +1,4 @@
 class_name Bourse extends PanelContainer
 
 
-@export var resource: BourseResource
+@export var resource: BourseResource# = BourseResource.new()
